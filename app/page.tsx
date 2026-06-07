@@ -60,7 +60,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("All")
 
-  function selectProblem(problem) {
+  function selectProblem(problem: typeof PROBLEMS[0]) {
     setSelectedProblem(problem)
     setCode(problem.starterCode)
     setReview(null)
