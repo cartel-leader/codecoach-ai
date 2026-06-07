@@ -47,7 +47,7 @@ const PROBLEMS = [
 
 const CATEGORIES = ["All", "Arrays", "Strings", "Linked Lists", "Trees", "Dynamic Programming", "Graphs", "Binary Search", "Stack", "Heap", "Recursion"]
 
-const DIFFICULTY_COLORS = {
+const DIFFICULTY_COLORS: Record<string, string> = {
   Easy: "text-green-400 bg-green-400/10 border-green-400/20",
   Medium: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20",
   Hard: "text-red-400 bg-red-400/10 border-red-400/20"
