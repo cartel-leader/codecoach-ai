@@ -2,7 +2,19 @@
 import { useState } from "react"
 import Editor from "@monaco-editor/react"
 
-const PROBLEMS = [
+type Difficulty = "Easy" | "Medium" | "Hard"
+
+interface Problem {
+  id: number
+  title: string
+  difficulty: Difficulty
+  category: string
+  description: string
+  example: string
+  starterCode: string
+}
+
+const PROBLEMS: Problem[] = [
   { id: 1, title: "Two Sum", difficulty: "Easy", category: "Arrays", description: "Given an array of integers nums and an integer target, return indices of the two numbers that add up to target.", example: "Input: nums = [2,7,11,15], target = 9\nOutput: [0,1]", starterCode: `def two_sum(nums, target):\n    # Write your solution here\n    pass\n\nprint(two_sum([2,7,11,15], 9))` },
   { id: 2, title: "Best Time to Buy and Sell Stock", difficulty: "Easy", category: "Arrays", description: "Find the maximum profit by choosing a single day to buy and a different day to sell.", example: "Input: [7,1,5,3,6,4]\nOutput: 5", starterCode: `def max_profit(prices):\n    # Write your solution here\n    pass\n\nprint(max_profit([7,1,5,3,6,4]))` },
   { id: 3, title: "Contains Duplicate", difficulty: "Easy", category: "Arrays", description: "Return true if any value appears at least twice in the array.", example: "Input: [1,2,3,1]\nOutput: True", starterCode: `def contains_duplicate(nums):\n    # Write your solution here\n    pass\n\nprint(contains_duplicate([1,2,3,1]))` },
@@ -47,20 +59,20 @@ const PROBLEMS = [
 
 const CATEGORIES = ["All", "Arrays", "Strings", "Linked Lists", "Trees", "Dynamic Programming", "Graphs", "Binary Search", "Stack", "Heap", "Recursion"]
 
-const DIFFICULTY_COLORS: Record<string, string> = {
+const DIFFICULTY_COLORS: Record<Difficulty, string> = {
   Easy: "text-green-400 bg-green-400/10 border-green-400/20",
   Medium: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20",
   Hard: "text-red-400 bg-red-400/10 border-red-400/20"
 }
 
 export default function Home() {
-  const [selectedProblem, setSelectedProblem] = useState(PROBLEMS[0])
-  const [code, setCode] = useState(PROBLEMS[0].starterCode)
-const [review, setReview] = useState<string | null>(null)
-const [loading, setLoading] = useState<boolean>(false)
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [selectedProblem, setSelectedProblem] = useState<Problem>(PROBLEMS[0])
+  const [code, setCode] = useState<string>(PROBLEMS[0].starterCode)
+  const [review, setReview] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [selectedCategory, setSelectedCategory] = useState<string>("All")
 
-  function selectProblem(problem: typeof PROBLEMS[0]) {
+  function selectProblem(problem: Problem) {
     setSelectedProblem(problem)
     setCode(problem.starterCode)
     setReview(null)
@@ -86,7 +98,6 @@ const [loading, setLoading] = useState<boolean>(false)
 
   return (
     <main className="min-h-screen bg-[#0d0d0d] text-white flex flex-col">
-      {/* Navbar */}
       <nav className="border-b border-white/5 px-6 py-3 flex items-center justify-between bg-[#0d0d0d]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <span className="text-2xl">⚔️</span>
@@ -100,7 +111,6 @@ const [loading, setLoading] = useState<boolean>(false)
       </nav>
 
       <div className="flex flex-1 overflow-hidden h-[calc(100vh-57px)]">
-        {/* Left Panel - Categories + Problems */}
         <div className="w-72 border-r border-white/5 flex flex-col bg-[#111111]">
           <div className="p-4 border-b border-white/5">
             <h2 className="font-bold text-sm text-gray-300 uppercase tracking-wider mb-3">Categories</h2>
@@ -126,7 +136,6 @@ const [loading, setLoading] = useState<boolean>(false)
           </div>
         </div>
 
-        {/* Middle Panel - Problem + Editor */}
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="border-b border-white/5 p-5 bg-[#111111]">
             <div className="flex items-center gap-3 mb-2">
@@ -144,7 +153,7 @@ const [loading, setLoading] = useState<boolean>(false)
               defaultLanguage="python"
               theme="vs-dark"
               value={code}
-              onChange={val => setCode(val || "")}
+              onChange={(val) => setCode(val || "")}
               options={{
                 fontSize: 14,
                 minimap: { enabled: false },
@@ -164,7 +173,6 @@ const [loading, setLoading] = useState<boolean>(false)
           </div>
         </div>
 
-        {/* Right Panel - AI Review */}
         <div className="w-96 border-l border-white/5 flex flex-col bg-[#111111]">
           <div className="p-4 border-b border-white/5">
             <h2 className="font-bold text-sm text-gray-300 uppercase tracking-wider">🤖 AI Code Reviewer</h2>
