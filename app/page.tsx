@@ -56,8 +56,8 @@ const DIFFICULTY_COLORS = {
 export default function Home() {
   const [selectedProblem, setSelectedProblem] = useState(PROBLEMS[0])
   const [code, setCode] = useState(PROBLEMS[0].starterCode)
-  const [review, setReview] = useState(null)
-  const [loading, setLoading] = useState(false)
+const [review, setReview] = useState<string | null>(null)
+const [loading, setLoading] = useState<boolean>(false)
   const [selectedCategory, setSelectedCategory] = useState("All")
 
   function selectProblem(problem: typeof PROBLEMS[0]) {
